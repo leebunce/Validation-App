@@ -1,13 +1,13 @@
 rules:
 - 
   expr: disp > 100
-  name: disp
+  name: error1
   label: disp greater than 100
   description: |
    The disp should be greater than 100.
 -
   expr: mpg > 20
-  name: mpg
+  name: error2
   label: mpg greater than 20
   description: |
     The mpg should be greater than 20.
