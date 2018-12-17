@@ -27,7 +27,8 @@ ui <- fluidPage(
                    label = "Upload file",
                    accept = "text/csv"),
          actionButton("validate", label = "Validate"),
-         downloadButton("download_errors", "Download errors")
+      
+      uiOutput("download")
       ),
       
       mainPanel(
@@ -71,6 +72,12 @@ server <- function(input, output) {
                                             contentType = "text/csv",
                                             content = function(file) {
                                               write_csv(error_data(), file)})
+  
+  output$download <- renderUI({
+    if(!is.null(error_data())) {
+      downloadButton("download_errors", "Download errors")
+    }
+  })
     
 }
 
