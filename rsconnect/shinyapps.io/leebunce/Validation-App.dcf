@@ -1,0 +1,12 @@
+name: Validation-App
+title: Validation-App
+username:
+account: leebunce
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 618953
+bundleId: 1769013
+url: https://leebunce.shinyapps.io/Validation-App/
+when: 1545072138.23235
+asMultiple: FALSE
+asStatic: FALSE
