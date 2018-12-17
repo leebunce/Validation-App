@@ -32,7 +32,7 @@ ui <- fluidPage(
       mainPanel(
         tabsetPanel(type = "tabs",
                     tabPanel("Errors", tableOutput("errors")),
-                    tabPanel("Data", tableOutput("input_file"))
+                    tabPanel("Data", tableOutput("data"))
         )
       )
    )
@@ -41,7 +41,7 @@ ui <- fluidPage(
 # Server ------------------------------------------------------------------
 server <- function(input, output) {
   
-  file <- reactive({
+  file <- eventReactive(input$validate, {
     
     if (is.null(input$file))
       return(NULL)
@@ -49,7 +49,7 @@ server <- function(input, output) {
     read_csv(input$file$datapath)
   })
    
-  output$input_file <- renderTable({file()})
+  output$data <- renderTable({file()})
   
   output$errors <- renderTable({
     if (is.null(file()))
