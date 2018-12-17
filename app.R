@@ -14,13 +14,13 @@ validator_df_mtcars <- validator_mtcars %>%
 
 # UI ----------------------------------------------------------------------
 ui <- fluidPage(
-   
-   # Application title
-   titlePanel("Validation App"),
-   
-   sidebarLayout(
-      sidebarPanel(
-         selectInput("collection",
+  
+  # Application title
+  titlePanel("Validation App"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("collection",
                      label = "Collection", 
                      choices = list("mtcars")),
          fileInput("file",
@@ -69,7 +69,8 @@ server <- function(input, output) {
   
   output$download_errors <- downloadHandler(filename = "errors.csv",
                                             contentType = "text/csv",
-                                            content = function(file) {write_csv(error_data(), file)})
+                                            content = function(file) {
+                                              write_csv(error_data(), file)})
     
 }
 
