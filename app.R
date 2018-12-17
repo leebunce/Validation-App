@@ -26,7 +26,8 @@ ui <- fluidPage(
          fileInput("file",
                    label = "Upload file",
                    accept = "text/csv"),
-         actionButton("validate", label = "Validate")
+         actionButton("validate", label = "Validate"),
+         downloadButton("download_errors", "Download errors")
       ),
       
       mainPanel(
@@ -48,10 +49,8 @@ server <- function(input, output) {
     
     read_csv(input$file$datapath)
   })
-   
-  output$data <- renderTable({file()})
   
-  output$errors <- renderTable({
+  error_data <- reactive({
     if (is.null(file()))
       return(NULL)
     
@@ -62,7 +61,15 @@ server <- function(input, output) {
       select(-value) %>% 
       arrange(car, name) %>% 
       rename(error = name)
-    })
+  })
+   
+  output$data <- renderTable({file()})
+  
+  output$errors <- renderTable({error_data()})
+  
+  output$download_errors <- downloadHandler(filename = "errors.csv",
+                                            contentType = "text/csv",
+                                            content = function(file) {write_csv(error_data(), file)})
     
 }
 
