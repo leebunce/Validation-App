@@ -8,6 +8,9 @@ library(validate)
 
 # Validation rules --------------------------------------------------------
 validator_mtcars <- validator(.file = 'Validation rules/mtcars.yaml')
+validator_df_mtcars <- validator_mtcars %>% 
+  as.data.frame() %>% 
+  select(name, label, description)
 
 # UI ----------------------------------------------------------------------
 ui <- fluidPage(
@@ -28,8 +31,8 @@ ui <- fluidPage(
       
       mainPanel(
         tabsetPanel(type = "tabs",
-                    tabPanel("Data", tableOutput("input_file")),
-                    tabPanel("Errors", tableOutput("errors"))
+                    tabPanel("Errors", tableOutput("errors")),
+                    tabPanel("Data", tableOutput("input_file"))
         )
       )
    )
@@ -54,6 +57,7 @@ server <- function(input, output) {
     
     confront(file(), validator_mtcars, key = "car") %>% 
       as.data.frame() %>% 
+      left_join(validator_df_mtcars, by = 'name') %>% 
       filter(value == F) %>% 
       select(-value) %>% 
       arrange(car, name) %>% 
