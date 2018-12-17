@@ -55,6 +55,7 @@ server <- function(input, output) {
     confront(file(), validator_mtcars, key = "car") %>% 
       as.data.frame() %>% 
       filter(value == F) %>% 
+      select(-value) %>% 
       arrange(car, name) %>% 
       rename(error = name)
     })
