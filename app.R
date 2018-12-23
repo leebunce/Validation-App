@@ -32,13 +32,10 @@ ui <- fluidPage(
       ),
       
       mainPanel(
-        tabsetPanel(type = "tabs",
-                    tabPanel("Errors", DT::dataTableOutput("errors")),
-                    tabPanel("Data", tableOutput("data"))
+        DT::dataTableOutput("errors")
         )
       )
    )
-)
 
 # Server ------------------------------------------------------------------
 server <- function(input, output) {
@@ -63,8 +60,6 @@ server <- function(input, output) {
       arrange(car, name) %>% 
       rename(error = name)
   })
-   
-  output$data <- renderTable({file()})
   
   output$errors <-  DT::renderDataTable(error_data(), filter = 'top')
   
