@@ -56,7 +56,7 @@ server <- function(input, output) {
       as.data.frame() %>% 
       left_join(validator_df_mtcars, by = 'name') %>% 
       filter(value == F) %>% 
-      select(-value) %>% 
+      select(-value, -expression, -label) %>% 
       arrange(car, name) %>% 
       rename(error = name)
   })
