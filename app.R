@@ -14,25 +14,23 @@ validator_df_mtcars <- validator_mtcars %>%
   select(name, label, description)
 
 # UI ----------------------------------------------------------------------
-ui <- fluidPage(
-  
-  # Application title
-  titlePanel("Validation App"),
-  
-  sidebarLayout(
-    sidebarPanel(
-      fileInput("file",
-                   label = "Upload file",
-                   accept = "text/csv"),
-      actionButton("validate", label = "Validate"),
-      uiOutput("download")
-      ),
-      
-      mainPanel(
-        DT::dataTableOutput("errors")
-        )
-      )
-   )
+ui <- navbarPage("Validation App",
+                 tabPanel("App",
+                          sidebarPanel(
+                            fileInput("file",
+                                      label = "Upload file",
+                                      accept = "text/csv"),
+                            actionButton("validate", label = "Validate"),
+                            uiOutput("download")
+                          ),
+                          
+                          mainPanel(
+                            DT::dataTableOutput("errors")
+                          )
+                 ),
+                 tabPanel("Notes",
+                          p("Notes go here."))
+)
 
 # Server ------------------------------------------------------------------
 server <- function(input, output) {
