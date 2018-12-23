@@ -8,7 +8,7 @@ library(validate)
 library(DT)
 
 # Read Function -----------------------------------------------------------
-source('Read functions/read_mtcars')
+source('Read functions/read_mtcars.R')
 
 # Validation rules --------------------------------------------------------
 validator_mtcars <- validator(.file = 'Validation rules/mtcars.yaml')
