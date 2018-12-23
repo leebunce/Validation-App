@@ -37,10 +37,10 @@ server <- function(input, output) {
   
   file <- eventReactive(input$validate, {
     
-    if (is.null(input$file))
-      return(NULL)
+    if (is.null(input$file)) return(NULL)
     
-    read_csv(input$file$datapath)
+    read_mtcars(input$file$datapath)
+    
   })
   
   error_data <- reactive({
