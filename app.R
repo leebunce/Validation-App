@@ -21,9 +21,6 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      selectInput("collection",
-                     label = "Collection", 
-                     choices = list("mtcars")),
       fileInput("file",
                    label = "Upload file",
                    accept = "text/csv"),
