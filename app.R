@@ -66,7 +66,7 @@ server <- function(input, output) {
                                               write_csv(error_data(), file)})
   
   output$download <- renderUI({
-    if(!is.null(error_data())) {
+    if(!(is.null(error_data()) | nrow(error_data()) == 0)) {
       downloadButton("download_errors", "Download errors")
     }
   })
