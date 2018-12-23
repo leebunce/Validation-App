@@ -7,6 +7,9 @@ library(dplyr)
 library(validate)
 library(DT)
 
+# Read Function -----------------------------------------------------------
+source('Read functions/read_mtcars')
+
 # Validation rules --------------------------------------------------------
 validator_mtcars <- validator(.file = 'Validation rules/mtcars.yaml')
 validator_df_mtcars <- validator_mtcars %>% 
