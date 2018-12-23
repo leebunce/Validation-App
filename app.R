@@ -5,6 +5,7 @@ library(shiny)
 library(readr)
 library(dplyr)
 library(validate)
+library(DT)
 
 # Validation rules --------------------------------------------------------
 validator_mtcars <- validator(.file = 'Validation rules/mtcars.yaml')
@@ -23,17 +24,16 @@ ui <- fluidPage(
       selectInput("collection",
                      label = "Collection", 
                      choices = list("mtcars")),
-         fileInput("file",
+      fileInput("file",
                    label = "Upload file",
                    accept = "text/csv"),
-         actionButton("validate", label = "Validate"),
-      
+      actionButton("validate", label = "Validate"),
       uiOutput("download")
       ),
       
       mainPanel(
         tabsetPanel(type = "tabs",
-                    tabPanel("Errors", tableOutput("errors")),
+                    tabPanel("Errors", DT::dataTableOutput("errors")),
                     tabPanel("Data", tableOutput("data"))
         )
       )
@@ -66,7 +66,7 @@ server <- function(input, output) {
    
   output$data <- renderTable({file()})
   
-  output$errors <- renderTable({error_data()})
+  output$errors <-  DT::renderDataTable(error_data(), filter = 'top')
   
   output$download_errors <- downloadHandler(filename = "errors.csv",
                                             contentType = "text/csv",
