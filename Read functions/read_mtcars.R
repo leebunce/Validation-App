@@ -28,10 +28,10 @@ read_mtcars <- function(file){
     carb = col_double()
   ))
   
-  stop_for_problems(out)
+  if(nrow(problems(out)) > 0) stop("Some data was not the expected type.", call. = F)
   
   # Make sure there are no additional columns
-  if(ncol(out) != 12) stop("Wrong number of columns", call. = F)
+  if(ncol(out) != 12) stop("Wrong number of columns.", call. = F)
   
   return(out)
 }

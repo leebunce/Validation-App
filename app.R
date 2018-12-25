@@ -47,8 +47,8 @@ server <- function(input, output) {
   })
   
   error_data <- reactive({
-    if (is.null(file()))
-      return(NULL)
+    
+    if (is.null(file())) return(NULL)
     
     confront(file(), validator_mtcars, key = "car") %>% 
       as.data.frame() %>% 
