@@ -50,6 +50,8 @@ server <- function(input, output) {
     
     if (is.null(file())) return(NULL)
     
+    if(nrow(problems(file())) > 0) return(problems(file()) %>% select(-file))
+    
     confront(file(), validator_mtcars, key = "car") %>% 
       as.data.frame() %>% 
       left_join(validator_df_mtcars, by = 'name') %>% 
@@ -70,8 +72,10 @@ server <- function(input, output) {
     tryCatch(
       if(!(is.null(error_data()) | nrow(error_data()) == 0)) {
         downloadButton("download_errors", "Download errors")
-        }, 
-      finally = return(NULL))
+      },
+      error = function(c) NULL
+    )
+    
   })
     
 }
