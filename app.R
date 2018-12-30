@@ -32,7 +32,10 @@ ui <- navbarPage("Validation App",
                           )
                  ),
                  tabPanel("Notes",
-                          p("Notes go here."))
+                          h1("Notes"),
+                          p("Notes go here."),
+                          h2("Sample data"),
+                          p(HTML(paste0("Some sample data for testing the app can be found ", a(href = "https://github.com/leebunce/Validation-App/tree/master/Test%20data", "here"), "."))))
 )
 
 # Server ------------------------------------------------------------------
