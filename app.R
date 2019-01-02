@@ -82,7 +82,7 @@ server <- function(input, output) {
   output$download <- renderUI({
     tryCatch(
       if(!(is.null(error_data()) | nrow(error_data()) == 0)) {
-        downloadButton("download_errors", "Download errors")
+        downloadButton("download_errors", "Download errors", style="color: #fff; background-color: #337ab7; border-color: #2e6da4; margin-top: 15px")
       },
       error = function(c) NULL
     )
