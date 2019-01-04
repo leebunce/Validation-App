@@ -7,6 +7,9 @@ library(dplyr)
 library(validate)
 library(DT)
 
+# Options -----------------------------------------------------------------
+options(shiny.sanitize.errors = FALSE)
+
 # Read Function -----------------------------------------------------------
 source('Read functions/read_mtcars.R')
 
