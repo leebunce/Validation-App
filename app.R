@@ -31,6 +31,7 @@ ui <- navbarPage("Validation App",
                           ),
                           
                           mainPanel(
+                            uiOutput("message"),
                             DT::dataTableOutput("errors")
                           )
                  ),
@@ -62,7 +63,7 @@ server <- function(input, output) {
   
   error_data <- reactive({
     
-    if (is.null(file())) return(NULL)
+    if(is.null(file())) return(NULL)
     
     if(nrow(problems(file())) > 0) return(problems(file()) %>% select(-file))
     
@@ -79,17 +80,23 @@ server <- function(input, output) {
   
   output$download_errors <- downloadHandler(filename = "errors.csv",
                                             contentType = "text/csv",
-                                            content = function(file) {
-                                              write_csv(error_data(), file)})
+                                            content = function(file) write_csv(error_data(), file))
   
   output$download <- renderUI({
     tryCatch(
       if(!(is.null(error_data()) | nrow(error_data()) == 0)) {
         downloadButton("download_errors", "Download errors", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4; margin-top: 15px")
       },
-      error = function(c) NULL
+      error = function(x) NULL)
+  })
+  
+  output$message <- renderUI({
+    tryCatch(
+      if(nrow(problems(file())) > 0) h3('Data error(s):')
+      else if(nrow(error_data()) > 0) h3('Validation error(s):')
+      else h3('There are no errors.'),
+      error = function(x) NULL
     )
-    
   })
     
 }
