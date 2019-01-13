@@ -97,9 +97,9 @@ server <- function(input, output) {
   
   output$message <- renderUI({
     tryCatch(
-      if(is.null(error_data())) h3('There are no errors.', style = "color:green")
-      else if(nrow(problems(file())) > 0) h3('Data error(s):', style = "color:red")
-      else if(nrow(error_data()) > 0) h3('Validation error(s):', style = "color:red"),
+      if(is.null(error_data())) p('There are no errors.', style = "color:green")
+      else if(nrow(problems(file())) > 0) p('Data error(s):', style = "color:red")
+      else if(nrow(error_data()) > 0) p('Validation error(s):', style = "color:red"),
       error = function(x) NULL
     )
   })
