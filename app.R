@@ -67,13 +67,18 @@ server <- function(input, output) {
     
     if(nrow(problems(file())) > 0) return(problems(file()) %>% select(-file))
     
-    confront(file(), validator_mtcars, key = "car") %>% 
+    errors <- confront(file(), validator_mtcars, key = "car") %>% 
       as.data.frame() %>% 
       left_join(validator_df_mtcars, by = 'name') %>% 
       filter(value == F) %>% 
       select(-value, -expression, -label) %>% 
       arrange(car, name) %>% 
       rename(error = name)
+    
+    if(nrow(errors) == 0) return(NULL)
+    
+    errors
+    
   })
   
   output$errors <-  DT::renderDataTable(error_data(), filter = 'top')
@@ -92,9 +97,9 @@ server <- function(input, output) {
   
   output$message <- renderUI({
     tryCatch(
-      if(nrow(problems(file())) > 0) h3('Data error(s):', style = "color:red")
-      else if(nrow(error_data()) > 0) h3('Validation error(s):', style = "color:red")
-      else h3('There are no errors.', style = "color:green"),
+      if(is.null(error_data())) h3('There are no errors.', style = "color:green")
+      else if(nrow(problems(file())) > 0) h3('Data error(s):', style = "color:red")
+      else if(nrow(error_data()) > 0) h3('Validation error(s):', style = "color:red"),
       error = function(x) NULL
     )
   })
